@@ -51,65 +51,68 @@
 
         <!-- Button trigger modal -->
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#PeopleDialog">
-            Launch demo modal
+            Add Person
         </button>
 
         <!-- Modal -->
-        <div class="modal fade" id="PeopleDialog" tabindex="-1" role="dialog" aria-labelledby="PeopleDialogTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="PeopleDialogTitle">Modal title</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="txtFirstName">First Name:</label>
-                            <input type="text" class="form-control" style="width: 300px" runat="server" placeholder="eg: mark" id="txtFirstName">
+        <form runat="server">
+            <div class="modal fade" id="PeopleDialog" tabindex="-1" role="dialog" aria-labelledby="PeopleDialogTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="PeopleDialogTitle">Modal title</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
                         </div>
-                        <div class="form-group">
-                            <label for="txtLastName">Last Name:</label>
-                            <input type="text" class="form-control" style="width: 300px" runat="server" placeholder="eg: stone" id="txtLastName">
-                        </div>
-                        <div class="form-group">
-                            <label for="cmState">State (select one):</label>
-                            <select class="form-control" style="width: 300px" id="cmState">
-                                <%--<option>1</option>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="txtFirstName">First Name:</label>
+                                <input type="text" class="form-control" style="width: 300px" runat="server" placeholder="eg: mark" id="txtFirstName">
+                            </div>
+                            <div class="form-group">
+                                <label for="txtLastName">Last Name:</label>
+                                <input type="text" class="form-control" style="width: 300px" runat="server" placeholder="eg: stone" id="txtLastName">
+                            </div>
+                            <div class="form-group">
+                                <label for="cmState">State (select one):</label>
+                                <select class="form-control" style="width: 300px" id="cmState">
+                                    <%--<option>1</option>
                             <option>2</option>
                             <option>3</option>
                             <option>4</option>--%>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="cmGender">State (select one):</label>
-                            <select class="form-control" style="width: 300px" id="cmGender">
-                                <option>Male</option>
-                                <option>Female</option>
-                            </select>
-                        </div>
-                        <%-- <div class="form-group">
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="cmGender">State (select one):</label>
+                                <select class="form-control" style="width: 300px" id="cmGender">
+                                    <option>Male</option>
+                                    <option>Female</option>
+                                </select>
+                            </div>
+                            <%-- <div class="form-group">
                              <label for="dpDOB">Date of Birth :</label>
                             <input data-provide="datepicker" id="dpDOB">
                         </div>--%>
-                        <div class="input-group date" data-provide="datepicker">
-                            <input type="text" class="form-control" style="width: 300px">
-                            <div class="input-group-addon left">
+                            <div class="input-group date" data-provide="datepicker">
+                                <label for="cmDOB">Date of Birth:</label>
+                                <input type="text" class="form-control" id="cmDOB" style="width: 300px">
+                                <%--<div class="input-group-addon left">
                                 <span class="glyphicon glyphicon-th"></span>
+                            </div>--%>
                             </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                    </div>
+                        <div class="modal-footer">
+                            <asp:Button runat="server" ID="btnCancel" CssClass="btn btn-secondary" data-dismiss="modal" Text="Close"></asp:Button>
+                            <asp:Button ID="btnSubmit" runat="server" CssClass="btn btn-primary" Text="Save changes"></asp:Button>
+                        </div>
 
 
+                    </div>
                 </div>
             </div>
-        </div>
-        <%--container div --%>
+            <%--container div --%>
+        </form>
     </div>
 </body>
 </html>
