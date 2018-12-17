@@ -11,23 +11,26 @@
             width: 300px;
         }
     </style>
+
+    <link href="Content/bootstrap.min.css" rel="stylesheet" />
+    <script src="Scripts/jquery-3.3.1.min.js"></script>
+    <script src="Scripts/bootstrap.min.js"></script>
+    <title></title>
     <script type="text/javascript">
         {
-            $(function () {
-                var change = function (txt) {
-                    $("#ID").append('<li>' + txt + '</li>');
-                };
-                change("this is the first change");
-                change("this is the second change");
+            $(document).ready(function () {
+                //var change = function (txt) {
+                var txt = '5';
+                $("#cmState").append('<option>' + txt + '</option>');
+                //};
+                $('.datepicker').datepicker({
+                    format: 'mm/dd/yyyy',
+                    startDate: '-3d'
+                });
             });
 
         }
     </script>
-    <link href="Content/bootstrap.min.css" rel="stylesheet" />
-    <link href="Content/bootstrap.min.css" rel="stylesheet" />
-    <script src="Scripts/jquery-3.3.1.slim.min.js"></script>
-    <script src="Scripts/bootstrap.min.js"></script>
-    <title></title>
 </head>
 <body>
 
@@ -70,20 +73,39 @@
                             <label for="txtLastName">Last Name:</label>
                             <input type="text" class="form-control" style="width: 300px" runat="server" placeholder="eg: stone" id="txtLastName">
                         </div>
+                        <div class="form-group">
+                            <label for="cmState">State (select one):</label>
+                            <select class="form-control" style="width: 300px" id="cmState">
+                                <%--<option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>--%>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="cmGender">State (select one):</label>
+                            <select class="form-control" style="width: 300px" id="cmGender">
+                                <option>Male</option>
+                                <option>Female</option>
+                            </select>
+                        </div>
+                        <%-- <div class="form-group">
+                             <label for="dpDOB">Date of Birth :</label>
+                            <input data-provide="datepicker" id="dpDOB">
+                        </div>--%>
+                        <div class="input-group date" data-provide="datepicker">
+                            <input type="text" class="form-control" style="width: 300px">
+                            <div class="input-group-addon left">
+                                <span class="glyphicon glyphicon-th"></span>
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button type="button" class="btn btn-primary">Save changes</button>
                     </div>
-                    <div class="form-group">
-                        <label for="cmState">State (select one):</label>
-                        <select class="form-control" id="cmState">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                        </select>
-                    </div>
+
+
                 </div>
             </div>
         </div>
