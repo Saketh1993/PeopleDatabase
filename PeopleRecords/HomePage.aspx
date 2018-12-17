@@ -28,6 +28,14 @@
                     startDate: '-3d'
                 });
             });
+            function Validate() {
+                var FirstName = $('#txtFirstName').val();
+                var LastName = $('#txtLastName').val();
+                var Gender = $('#cmGender').val();
+                console.log(FirstName+LastName+Gender);
+
+
+            }
 
         }
     </script>
@@ -104,7 +112,7 @@
                         </div>
                         <div class="modal-footer">
                             <asp:Button runat="server" ID="btnCancel" CssClass="btn btn-secondary" data-dismiss="modal" Text="Close"></asp:Button>
-                            <asp:Button ID="btnSubmit" runat="server" CssClass="btn btn-primary" Text="Save changes"></asp:Button>
+                            <asp:Button ID="btnSubmit" runat="server"  CssClass="btn btn-primary" OnClientClick="Validate();return false;" Text="Save changes"></asp:Button>
                         </div>
 
 
