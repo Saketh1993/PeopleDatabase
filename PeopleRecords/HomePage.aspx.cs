@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using PeopleRecords.Models;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -19,7 +22,21 @@ namespace PeopleRecords
         public static string GetStates()
         {
 
-            return "Json String comes here";
+            DB db = new DB();
+
+            try
+            {
+                DataTable dtbl;
+                //gets the table containing the states and state codes
+                db.GetStates(out dtbl);
+                //string StatesJson = JsonConvert.SerializeObject(dtbl);
+                return JsonConvert.SerializeObject(dtbl);
+                //return "Json String comes here";
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
         }
 
     }

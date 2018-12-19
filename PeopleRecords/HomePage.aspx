@@ -30,23 +30,31 @@
                 //var txt = '5';
                 //$("#cmState").append('<option>' + txt + '</option>');
                 //};
-                //$('.datepicker').datepicker({
-                //    format: 'mm/dd/yyyy',
-                //    startDate: '-3d'
-                //});
+                $('.datepicker').datepicker({
+                    format: 'mm/dd/yyyy',
+                    startDate: '-3d'
+                });
+                $('#btnSubmit').click(function () {
+                    console.log('im here');
+                });
             });
             function onsucces(r) {
-                console.log(r);
-                $("#cmState").append('<option>' + r + '</option>');
+                console.log(JSON.parse(r));
+                var v = JSON.parse(r);
+                for (i = 0; i < v.length; i++) {
+                    $("#cmState").append('<option>' + v[i]['state_code'] + '</option>');
+                }
             }
             function onfailure(r) {
-                console.log(r);
+                //console.log(r);
             }
             function Validate() {
                 var errors = 0;
                 var FirstName = $('#txtFirstName').val();
                 var LastName = $('#txtLastName').val();
-                var Gender = $('#cmGender').val();
+                var Gender = $('#dpDOB').val();
+                console.log(FirstName + LastName + Gender);
+                $('.btnSubmit').addClass('has-error has-feedback');
             }
 
         }
@@ -129,7 +137,7 @@
                         </div>
                         <div class="modal-footer">
                             <asp:Button runat="server" ID="btnCancel" CssClass="btn btn-secondary" data-dismiss="modal" Text="Close"></asp:Button>
-                            <input id="btnSubmit" type="submit" class="btn btn-primary" onclick="Validate(); return false" value="Save changes"> </input>
+                            <input id="btnSubmit" type="submit" class="btn btn-primary"  value="Save changes"> </input>  <%--onclick="Validate(); return false;"--%>
                         </div>
 
 
