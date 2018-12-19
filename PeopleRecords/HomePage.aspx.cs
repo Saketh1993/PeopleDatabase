@@ -13,5 +13,13 @@ namespace PeopleRecords
         {
 
         }
+
+
+        [System.Web.Services.WebMethod]
+        public static string GetStates()
+        {
+            return "Json String comes here";
+        }
+
     }
 }

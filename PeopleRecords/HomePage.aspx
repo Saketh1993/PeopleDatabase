@@ -23,24 +23,30 @@
     <script type="text/javascript">
         {
             $(document).ready(function () {
+                //https://www.aspsnippets.com/Articles/Call-Server-Side-function-from-JavaScript-without-PostBack-in-ASPNet.aspx
                 //var change = function (txt) {
-                var txt = '5';
-                $("#cmState").append('<option>' + txt + '</option>');
+                PageMethods.GetStates(onsucces, onfailure);
+
+                //var txt = '5';
+                //$("#cmState").append('<option>' + txt + '</option>');
                 //};
                 //$('.datepicker').datepicker({
                 //    format: 'mm/dd/yyyy',
                 //    startDate: '-3d'
                 //});
             });
+            function onsucces(r) {
+                console.log(r);
+                $("#cmState").append('<option>' + r + '</option>');
+            }
+            function onfailure(r) {
+                console.log(r);
+            }
             function Validate() {
                 var errors = 0;
                 var FirstName = $('#txtFirstName').val();
                 var LastName = $('#txtLastName').val();
                 var Gender = $('#cmGender').val();
-               
-
-
-
             }
 
         }
@@ -48,19 +54,22 @@
 </head>
 <body>
 
+
+
     <div id="divContainer" runat="server" class="container">
         <h2>People Database</h2>
         <p>The search below is used to lookup existing people records</p>
         <br />
-        <form>
-            <div class="row">
-                <div class="form-group">
-                    <label for="txtPersonSearch">Person search:</label>
-                    <input type="text" class="form-control" style="width: 300px" runat="server" placeholder="eg: mark stone" id="txtPersonSearch">
-                </div>
+        <%--<form runat="server">--%>
+
+        <div class="row">
+            <div class="form-group">
+                <label for="txtPersonSearch">Person search:</label>
+                <input type="text" class="form-control" style="width: 300px" runat="server" placeholder="eg: mark stone" id="txtPersonSearch">
             </div>
-            <br />
-        </form>
+        </div>
+        <br />
+        <%-- </form>--%>
 
 
         <!-- Button trigger modal -->
@@ -70,6 +79,8 @@
 
         <!-- Modal -->
         <form runat="server" class="val">
+            <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePartialRendering="true" EnablePageMethods="true">
+            </asp:ScriptManager>
             <div class="modal fade" id="PeopleDialog" tabindex="-1" role="dialog" aria-labelledby="PeopleDialogTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
@@ -118,7 +129,7 @@
                         </div>
                         <div class="modal-footer">
                             <asp:Button runat="server" ID="btnCancel" CssClass="btn btn-secondary" data-dismiss="modal" Text="Close"></asp:Button>
-                            <input id="btnSubmit" type="submit" class="btn btn-primary"  onclick="Validate(); return false" value="Save changes"> </input>
+                            <input id="btnSubmit" type="submit" class="btn btn-primary" onclick="Validate(); return false" value="Save changes"> </input>
                         </div>
 
 
