@@ -13,31 +13,90 @@
     </style>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="Content/bootstrap.min.css" rel="stylesheet" />
-    <script src="Scripts/jquery-3.3.1.min.js"></script>
-    <script src="Scripts/bootstrap.min.js"></script>
-    <!-- Bootstrap Date-Picker Plugin -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" />
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.js"></script>
+    <script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/css/bootstrapValidator.css" />
+
+    <!---- AnyOther custom stylesheets ---->
+
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css" />
+
     <title></title>
+
     <script type="text/javascript">
         {
+
+            //bootstrapvalidate('#txtLastName', 'min:1:Required Field !');
+            //bootstrapvalidate('#txtFirstName', 'min:1:Required Field !')
+            //bootstrapvalidate('#dpDOB', 'ISO8601:Input does not match YYYY-MM-DD')
+
+
             $(document).ready(function () {
                 //https://www.aspsnippets.com/Articles/Call-Server-Side-function-from-JavaScript-without-PostBack-in-ASPNet.aspx
                 //var change = function (txt) {
-                PageMethods.GetStates(onsucces, onfailure);
+                //PageMethods.GetStates(onsucces, onfailure);
 
                 //var txt = '5';
                 //$("#cmState").append('<option>' + txt + '</option>');
                 //};
-                $('.datepicker').datepicker({
-                    format: 'mm/dd/yyyy',
-                    startDate: '-3d'
-                });
-                $('#btnSubmit').click(function () {
-                    console.log('im here');
+                //$('.datepicker').datepicker({
+                //    format: 'mm/dd/yyyy',
+                //    startDate: '-3d'
+                //});
+                //$('#btnSubmit').click(function () {
+
+                //});
+                $('.registerForm').bootstrapValidator({
+                    feedbackIcons: {
+                        valid: 'glyphicon glyphicon-ok',
+                        invalid: 'glyphicon glyphicon-remove',
+                        validating: 'glyphicon glyphicon-refresh'
+                    },
+                    //live: 'enabled',
+                    message: 'This value is not valid',
+                    submitButtons: '#btnSubmit',
+                    fields: {
+                        txtFirstName: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'First Name is required and cannot be empty'
+                                },
+                            },
+                        },
+                        txtLastName: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'Last Name is required and cannot be empty'
+                                },
+                            },
+                        },
+                        dpDOB: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'DOB cannot be empty'
+                                },
+                                date: {
+                                    format: 'MM/DD/YYYY',
+                                    message: 'The value is not a valid date'
+                                },
+                            },
+                        },
+                        cmState: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'State is required and cannot be empty'
+                                },
+                            },
+                        }
+
+                    }
                 });
             });
+
+
             function onsucces(r) {
                 console.log(JSON.parse(r));
                 var v = JSON.parse(r);
@@ -86,7 +145,7 @@
         </button>
 
         <!-- Modal -->
-        <form runat="server" class="val">
+        <form runat="server" class="val registerForm">
             <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePartialRendering="true" EnablePageMethods="true">
             </asp:ScriptManager>
             <div class="modal fade" id="PeopleDialog" tabindex="-1" role="dialog" aria-labelledby="PeopleDialogTitle" aria-hidden="true">
@@ -101,15 +160,15 @@
                         <div class="modal-body">
                             <div class="form-group">
                                 <label for="txtFirstName">First Name:</label>
-                                <input type="text" class="form-control" style="width: 300px" spellcheck="false" runat="server" autocomplete="off" placeholder="eg: mark" id="txtFirstName" aria-required="true" required>
+                                <input type="text" class="form-control" style="width: 300px" spellcheck="false" runat="server" autocomplete="off" placeholder="eg: mark" id="txtFirstName" name="txtFirstName">
                             </div>
                             <div class="form-group">
                                 <label for="txtLastName">Last Name:</label>
-                                <input type="text" class="form-control" style="width: 300px" runat="server" autocomplete="off" placeholder="eg: stone" id="txtLastName" required>
+                                <input type="text" class="form-control" style="width: 300px" runat="server" autocomplete="off" placeholder="eg: stone" id="txtLastName">
                             </div>
                             <div class="form-group">
                                 <label for="cmState">State (select one):</label>
-                                <select class="form-control" style="width: 300px" id="cmState">
+                                <select class="form-control" style="width: 300px" name="cmState" id="cmState">
                                     <%--<option>1</option>
                             <option>2</option>
                             <option>3</option>
@@ -118,14 +177,14 @@
                             </div>
                             <div class="form-group">
                                 <label for="cmGender">State (select one):</label>
-                                <select class="form-control" style="width: 300px" id="cmGender">
+                                <select class="form-control" style="width: 300px" name="cmGender" id="cmGender">
                                     <option>Male</option>
                                     <option>Female</option>
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label for="dpDOB">Date of Birth :</label>
-                                <input data-provide="datepicker" style="width: 300px" class="form-control" id="dpDOB">
+                                <input data-provide="datepicker" style="width: 300px" class="form-control" name="dpDOB" id="dpDOB">
                             </div>
                             <%-- <div class="input-group date" data-provide="datepicker">
                                 <label for="cmDOB">Date of Birth:</label>--%>
@@ -137,7 +196,8 @@
                         </div>
                         <div class="modal-footer">
                             <asp:Button runat="server" ID="btnCancel" CssClass="btn btn-secondary" data-dismiss="modal" Text="Close"></asp:Button>
-                            <input id="btnSubmit" type="submit" class="btn btn-primary"  value="Save changes"> </input>  <%--onclick="Validate(); return false;"--%>
+                            <input id="btnSubmit" type="submit" class="btn btn-primary" value="Save changes"> </input>
+                            <%--onclick="Validate(); return false;"--%>
                         </div>
 
 

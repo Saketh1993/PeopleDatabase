@@ -28,10 +28,10 @@ namespace PeopleRecords
             {
                 DataTable dtbl;
                 //gets the table containing the states and state codes
-                db.GetStates(out dtbl);
+               // db.GetStates(out dtbl);
                 //string StatesJson = JsonConvert.SerializeObject(dtbl);
-                return JsonConvert.SerializeObject(dtbl);
-                //return "Json String comes here";
+              //  return JsonConvert.SerializeObject(dtbl);
+                return "Json String comes here";
             }
             catch(Exception ex)
             {
