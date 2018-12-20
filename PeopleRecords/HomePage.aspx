@@ -35,7 +35,7 @@
                     startDate: '-3d'
                 });
                 $('#btnSubmit').click(function () {
-                    console.log('im here');
+                    alert('im here');
                 });
             });
             function onsucces(r) {
@@ -54,7 +54,6 @@
                 var LastName = $('#txtLastName').val();
                 var Gender = $('#dpDOB').val();
                 console.log(FirstName + LastName + Gender);
-                $('.btnSubmit').addClass('has-error has-feedback');
             }
 
         }
@@ -125,7 +124,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="dpDOB">Date of Birth :</label>
-                                <input data-provide="datepicker" style="width: 300px" class="form-control" id="dpDOB">
+                                <input data-provide="datepicker" style="width: 300px" class="form-control" id="dpDOB" required>
                             </div>
                             <%-- <div class="input-group date" data-provide="datepicker">
                                 <label for="cmDOB">Date of Birth:</label>--%>
@@ -137,7 +136,7 @@
                         </div>
                         <div class="modal-footer">
                             <asp:Button runat="server" ID="btnCancel" CssClass="btn btn-secondary" data-dismiss="modal" Text="Close"></asp:Button>
-                            <input id="btnSubmit" type="submit" class="btn btn-primary"  value="Save changes"> </input>  <%--onclick="Validate(); return false;"--%>
+                            <input id="btnSubmit" type="submit" class="btn btn-primary" value="Save changes"> </input>  <%--onclick="Validate(); return false;"--%>
                         </div>
 
 
