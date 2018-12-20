@@ -29,5 +29,20 @@ namespace PeopleRecords.Models
                 //return (Int32)cmd.Parameters["Return_Value"].Value;
             }
         }
+
+        public void SavePersonDetails(string FirstName, string LastName, string State, char Gender, string DOB)
+        {
+            using (var conn = new SqlConnection(WebConfigurationManager.AppSettings["ConnectionString"]))
+            {
+               // dtbl = new DataTable("uspStateList");
+                SqlCommand cmd = new SqlCommand("uspStatesList", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandTimeout = 500;
+
+
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+               // da.Fill(dtbl);
+            }
+        }
     }
 }

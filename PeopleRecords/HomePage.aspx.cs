@@ -24,6 +24,18 @@ namespace PeopleRecords
         [System.Web.Services.WebMethod]
         public static void SavePerson(string Data)
         {
+            string[] Person = Data.Split(',');
+            DB db = new DB();
+            try
+            {
+                char Gender = Person[0].ToString().Trim() == "Male" ? 'M' : 'F';
+                db.SavePersonDetails(Person[0].ToString().Trim(), Person[0].ToString().Trim(), Person[0].ToString().Trim(), Gender, Person[0].ToString().Trim());
+            }
+            catch (Exception ex)
+            {
+
+            }
+
 
         }
 
@@ -41,12 +53,12 @@ namespace PeopleRecords
             {
                 DataTable dtbl;
                 //gets the table containing the states and state codes
-               // db.GetStates(out dtbl);
+                // db.GetStates(out dtbl);
                 //string StatesJson = JsonConvert.SerializeObject(dtbl);
-              //  return JsonConvert.SerializeObject(dtbl);
+                //  return JsonConvert.SerializeObject(dtbl);
                 return "Json String comes here";
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw ex;
             }
