@@ -34,6 +34,7 @@
             //bootstrapvalidate('#dpDOB', 'ISO8601:Input does not match YYYY-MM-DD')
 
 
+            // Boostrap validations for the form
             $(document).ready(function () {
                 //https://www.aspsnippets.com/Articles/Call-Server-Side-function-from-JavaScript-without-PostBack-in-ASPNet.aspx
                 //var change = function (txt) {
@@ -46,9 +47,29 @@
                 //    format: 'mm/dd/yyyy',
                 //    startDate: '-3d'
                 //});
+                var date = new Date();
+                var today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+                $('[name="dpDOB"]')
+                    .datepicker({
+                        format: 'mm/dd/yyyy',
+                        startDate: '01/01/1950',
+                        endDate: today,
+                    })
+                    .on('changeDate', function (e) {
+                        // Revalidate the date field
+                        fv.revalidateField('date');
+                    });
+
                 //$('#btnSubmit').click(function () {
 
                 //});
+                $('#btnAddPerson').click(function () {
+
+                    $('#txtFirstName').val('');
+                    $('#txtLastName').val('');
+                    $('#dpDOB').val('');
+                });
+
 
                 $('.registerForm').bootstrapValidator({
                     feedbackIcons: {
@@ -84,12 +105,14 @@
                         },
                         dpDOB: {
                             validators: {
-                                //notEmpty: {
-                                //    message: 'DOB cannot be empty'
-                                //},
+                                notEmpty: {
+                                    message: 'The date is required'
+                                },
                                 date: {
                                     format: 'MM/DD/YYYY',
-                                    message: 'The value is not a valid date'
+                                    min: '01/01/2010',
+                                    max: '12/30/2020',
+                                    message: 'The date is not valid'
                                 },
                             },
                         },
@@ -106,25 +129,41 @@
                 });
             });
 
+            //on validation of form failure this event is triggered 
             function onFormError(e) {
                 // Do something ...
                 //alert();
             };
 
+            //on validation of form success this function  is triggered 
             function onFormSuccess(e) {
-                
+
                 // Do something ...
                 var data = [];
                 var FirstName = $('#txtFirstName').val();
                 var LastName = $('#txtLastName').val();
                 var DOB = $('#dpDOB').val();
                 var Gender = $('#cmGender').val();
-                var State= $('#cmState').val();
+                var State = $('#cmState').val();
                 data.push(FirstName);
                 data.push(LastName);
-                data.push(DOB);
-                data.push(Gender);
                 data.push(State);
+                data.push(Gender);
+                data.push(DOB);
+                $.ajax({
+                    type: 'POST',
+                    URL: 'HomePage.aspx/SavePerson',
+                    data: data,
+                    dataType: 'text',
+                    success: function (data, textStatus, jQxhr) {
+                        alert('Success');
+                    },
+                    error: function (jqXhr, textStatus, errorThrown) {
+                        alert('error');
+                    }
+
+                });
+
                 alert(data);
 
             };
@@ -173,7 +212,7 @@
 
 
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#PeopleDialog">
+        <button type="button" class="btn btn-primary" data-toggle="modal" id="btnAddPerson" data-target="#PeopleDialog">
             Add Person
         </button>
 
@@ -217,7 +256,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="dpDOB">Date of Birth :</label>
-                                <input data-provide="datepicker" style="width: 300px" class="form-control" name="dpDOB" id="dpDOB">
+                                <input data-provide="datepicker" autocomplete="off" style="width: 300px" class="form-control" name="dpDOB" id="dpDOB">
                             </div>
                             <%-- <div class="input-group date" data-provide="datepicker">
                                 <label for="cmDOB">Date of Birth:</label>--%>

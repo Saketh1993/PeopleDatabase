@@ -17,7 +17,20 @@ namespace PeopleRecords
 
         }
 
+        /// <summary>
+        /// This method is used to save the person detils , this method is called using ajax from the client side 
+        /// </summary>
+        /// <param name="Data"></param>
+        [System.Web.Services.WebMethod]
+        public static void SavePerson(string Data)
+        {
 
+        }
+
+        /// <summary>
+        /// This methods gets all the states and parses into JSON to send to client side 
+        /// </summary>
+        /// <returns></returns>
         [System.Web.Services.WebMethod]
         public static string GetStates()
         {
