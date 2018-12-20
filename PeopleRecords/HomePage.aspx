@@ -108,12 +108,25 @@
 
             function onFormError(e) {
                 // Do something ...
-                alert();
+                //alert();
             };
 
             function onFormSuccess(e) {
+                
                 // Do something ...
-                alert();
+                var data = [];
+                var FirstName = $('#txtFirstName').val();
+                var LastName = $('#txtLastName').val();
+                var DOB = $('#dpDOB').val();
+                var Gender = $('#cmGender').val();
+                var State= $('#cmState').val();
+                data.push(FirstName);
+                data.push(LastName);
+                data.push(DOB);
+                data.push(Gender);
+                data.push(State);
+                alert(data);
+
             };
 
 
