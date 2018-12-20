@@ -39,8 +39,8 @@
                 //var change = function (txt) {
                 //PageMethods.GetStates(onsucces, onfailure);
 
-                //var txt = '5';
-                //$("#cmState").append('<option>' + txt + '</option>');
+                var txt = '5';
+                $("#cmState").append('<option>' + txt + '</option>');
                 //};
                 //$('.datepicker').datepicker({
                 //    format: 'mm/dd/yyyy',
@@ -49,6 +49,7 @@
                 //$('#btnSubmit').click(function () {
 
                 //});
+
                 $('.registerForm').bootstrapValidator({
                     feedbackIcons: {
                         valid: 'glyphicon glyphicon-ok',
@@ -65,6 +66,10 @@
                                     message: 'First Name is required and cannot be empty'
                                 },
                             },
+                            regexp: {
+                                regexp: /^[a-zA-Z]+$/,
+                                message: 'Name can only consist of alphabetical'
+                            },
                         },
                         txtLastName: {
                             validators: {
@@ -72,12 +77,16 @@
                                     message: 'Last Name is required and cannot be empty'
                                 },
                             },
+                            regexp: {
+                                regexp: /^[a-zA-Z]+$/,
+                                message: 'Name can only consist of alphabetical'
+                            },
                         },
                         dpDOB: {
                             validators: {
-                                notEmpty: {
-                                    message: 'DOB cannot be empty'
-                                },
+                                //notEmpty: {
+                                //    message: 'DOB cannot be empty'
+                                //},
                                 date: {
                                     format: 'MM/DD/YYYY',
                                     message: 'The value is not a valid date'
@@ -92,9 +101,20 @@
                             },
                         }
 
-                    }
+                    },
+
                 });
             });
+
+            function onFormError(e) {
+                // Do something ...
+                alert();
+            };
+
+            function onFormSuccess(e) {
+                // Do something ...
+                alert();
+            };
 
 
             function onsucces(r) {
@@ -145,7 +165,7 @@
         </button>
 
         <!-- Modal -->
-        <form runat="server" class="val registerForm">
+        <form runat="server" class="val registerForm" data-bv-onerror="onFormError" data-bv-onsuccess="onFormSuccess">
             <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePartialRendering="true" EnablePageMethods="true">
             </asp:ScriptManager>
             <div class="modal fade" id="PeopleDialog" tabindex="-1" role="dialog" aria-labelledby="PeopleDialogTitle" aria-hidden="true">
