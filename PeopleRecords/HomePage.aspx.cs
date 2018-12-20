@@ -17,6 +17,14 @@ namespace PeopleRecords
 
         }
 
+        [System.Web.Services.WebMethod]
+        public static string GetPersonDetails()
+        {
+            //var stringArr = dataTable.Rows[0].ItemArray.Select(x => x.ToString()).ToArray();
+            return "";
+        }
+
+        #region WebMethods
         /// <summary>
         /// This method is used to save the person detils , this method is called using ajax from the client side 
         /// </summary>
@@ -63,6 +71,7 @@ namespace PeopleRecords
                 throw ex;
             }
         }
+        #endregion
 
     }
 }

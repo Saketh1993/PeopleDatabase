@@ -15,8 +15,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" />
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/css/bootstrapValidator.css" />
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    <script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     <!---- AnyOther custom stylesheets ---->
 
@@ -39,6 +43,34 @@
                 //https://www.aspsnippets.com/Articles/Call-Server-Side-function-from-JavaScript-without-PostBack-in-ASPNet.aspx
                 //var change = function (txt) {
                 //PageMethods.GetStates(onsucces, onfailure);
+
+                var availableTags = [
+                    "ActionScript",
+                    "AppleScript",
+                    "Asp",
+                    "BASIC",
+                    "C",
+                    "C++",
+                    "Clojure",
+                    "COBOL",
+                    "ColdFusion",
+                    "Erlang",
+                    "Fortran",
+                    "Groovy",
+                    "Haskell",
+                    "Java",
+                    "JavaScript",
+                    "Lisp",
+                    "Perl",
+                    "PHP",
+                    "Python",
+                    "Ruby",
+                    "Scala",
+                    "Scheme"
+                ];
+                $("#txtPersonSearch").autocomplete({
+                    source: availableTags
+                });
 
                 var txt = '5';
                 $("#cmState").append('<option>' + txt + '</option>');
@@ -170,7 +202,7 @@
 
 
             function onsucces(r) {
-                console.log(JSON.parse(r));
+                //console.log(JSON.parse(r));
                 var v = JSON.parse(r);
                 for (i = 0; i < v.length; i++) {
                     $("#cmState").append('<option>' + v[i]['state_code'] + '</option>');
@@ -179,12 +211,13 @@
             function onfailure(r) {
                 //console.log(r);
             }
+
             function Validate() {
                 var errors = 0;
                 var FirstName = $('#txtFirstName').val();
                 var LastName = $('#txtLastName').val();
                 var Gender = $('#dpDOB').val();
-                console.log(FirstName + LastName + Gender);
+                //console.log(FirstName + LastName + Gender);
                 $('.btnSubmit').addClass('has-error has-feedback');
             }
 
@@ -194,14 +227,13 @@
 <body>
 
 
-
     <div id="divContainer" runat="server" class="container">
         <h2>People Database</h2>
         <p>The search below is used to lookup existing people records</p>
         <br />
         <%--<form runat="server">--%>
 
-        <div class="row">
+        <div class="row ui-widget">
             <div class="form-group">
                 <label for="txtPersonSearch">Person search:</label>
                 <input type="text" class="form-control" style="width: 300px" runat="server" placeholder="eg: mark stone" id="txtPersonSearch">
