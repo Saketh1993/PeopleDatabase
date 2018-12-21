@@ -30,18 +30,27 @@ namespace PeopleRecords.Models
             }
         }
 
-        public void SavePersonDetails(string FirstName, string LastName, string State, char Gender, string DOB)
+        public void SavePersonDetails(string FirstName, string LastName, string State, char Gender, string DOB,int PersonID)
         {
             using (var conn = new SqlConnection(WebConfigurationManager.AppSettings["ConnectionString"]))
             {
-               // dtbl = new DataTable("uspStateList");
+               // dtbl = new DataTable("uspPersonUpsert");
                 SqlCommand cmd = new SqlCommand("uspPersonUpsert", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandTimeout = 500;
+                conn.Open();
+                cmd.Parameters.AddWithValue("@FirstName",FirstName);
+                cmd.Parameters.AddWithValue("@LastName", LastName);
+                cmd.Parameters.AddWithValue("@stateCode", State);
+                cmd.Parameters.AddWithValue("@DOB", DOB);
+                cmd.Parameters.AddWithValue("@Gender", Gender);
+               // cmd.Parameters.AddWithValue("@StateID", PersonID);
+                cmd.Parameters.AddWithValue("@PersonID", PersonID);
+                cmd.ExecuteNonQuery();
+                conn.Close();
 
-               
 
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                //SqlDataAdapter da = new SqlDataAdapter(cmd);
                // da.Fill(dtbl);
             }
         }
