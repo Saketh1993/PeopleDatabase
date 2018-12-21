@@ -35,10 +35,11 @@ namespace PeopleRecords.Models
             using (var conn = new SqlConnection(WebConfigurationManager.AppSettings["ConnectionString"]))
             {
                // dtbl = new DataTable("uspStateList");
-                SqlCommand cmd = new SqlCommand("uspStatesList", conn);
+                SqlCommand cmd = new SqlCommand("uspPersonUpsert", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandTimeout = 500;
 
+               
 
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                // da.Fill(dtbl);

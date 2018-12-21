@@ -89,7 +89,7 @@
                     })
                     .on('changeDate', function (e) {
                         // Revalidate the date field
-                        fv.revalidateField('date');
+                        //fv.revalidateField('date');
                     });
 
                 //$('#btnSubmit').click(function () {
@@ -137,9 +137,9 @@
                         },
                         dpDOB: {
                             validators: {
-                                notEmpty: {
-                                    message: 'The date is required'
-                                },
+                                //notEmpty: {
+                                //    message: 'The date is required'
+                                //},
                                 date: {
                                     format: 'MM/DD/YYYY',
                                     min: '01/01/2010',
@@ -165,41 +165,49 @@
             function onFormError(e) {
                 // Do something ...
                 //alert();
-            };
+            }
 
             //on validation of form success this function  is triggered 
             function onFormSuccess(e) {
 
                 // Do something ...
-                var data = [];
+                var data = {};
                 var FirstName = $('#txtFirstName').val();
                 var LastName = $('#txtLastName').val();
                 var DOB = $('#dpDOB').val();
                 var Gender = $('#cmGender').val();
                 var State = $('#cmState').val();
-                data.push(FirstName);
-                data.push(LastName);
-                data.push(State);
-                data.push(Gender);
-                data.push(DOB);
-                $.ajax({
-                    type: 'POST',
-                    URL: 'HomePage.aspx/SavePerson',
-                    data: data,
-                    dataType: 'text',
-                    success: function (data, textStatus, jQxhr) {
-                        alert('Success');
-                    },
-                    error: function (jqXhr, textStatus, errorThrown) {
-                        alert('error');
-                    }
+                data['FirstName'] = FirstName;
+                data['LastName'] = LastName;
+                data['State'] = State;
+                data['Gender'] = Gender;
+                data['DOB'] = DOB;
+                //alert(data);
+                alert(JSON.stringify(data).replace(/[\[\]]+/g, ''));
+                //$.ajax({
+                //    type: 'POST',
+                //    URL: 'HomePage.aspx/SavePerson',
+                //    data: 'PersonDetail:"' +  JSON.stringify(data).replace(/[\[\]]+/g, ''),
+                //    contentType: "application/json; charset=utf-8",
+                //    dataType: "json",
+                //    success: function (data, textStatus, jQxhr) {
+                //        alert('Success');
+                //    },
+                //    error: function (jqXhr, textStatus, errorThrown) {
+                //        alert(data);
+                //        console.log(errorThrown.message);
+                //        alert(errorThrown.message);
+                //    }
+                //});
+                PageMethods.SavePerson(JSON.stringify(data).replace(/[\[\]]+/g, ''), onsucces1, onfailure1);
 
-                });
-
-                alert(data);
-
-            };
-
+            }
+            function onsucces1(r) {
+                alert(r.message);
+            }
+            function onfailure1(r) {
+                alert(r.message);
+            }
 
             function onsucces(r) {
                 //console.log(JSON.parse(r));

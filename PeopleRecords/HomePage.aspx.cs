@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -30,18 +31,27 @@ namespace PeopleRecords
         /// </summary>
         /// <param name="Data"></param>
         [System.Web.Services.WebMethod]
-        public static void SavePerson(string Data)
+        public static string SavePerson(string PersonDetail)
         {
-            string[] Person = Data.Split(',');
+            //Regex word = new Regex(@"/([A-Z,a-z,:])+/g");
+            //Match m = word.Match(PersonDetail.ToString());
+            //PersonDetail = m.Value;
+            //Regex reg = new Regex("([A - Z,]) +");
+            //PersonDetail = Regex.Match(PersonDetail.ToString(), reg);
+            PersonDetail = PersonDetail.Replace('\\',' ').Replace(':',',').Replace('{',' ').Replace('}',' ').Replace('"',' ').Replace('\"',' ');
+            string[] array = PersonDetail.Split(',');
+            
+           
             DB db = new DB();
             try
             {
-                char Gender = Person[0].ToString().Trim() == "Male" ? 'M' : 'F';
-                db.SavePersonDetails(Person[0].ToString().Trim(), Person[0].ToString().Trim(), Person[0].ToString().Trim(), Gender, Person[0].ToString().Trim());
+                char Gender = array[7].ToString().Contains("Male") ? 'M' : 'F';
+                db.SavePersonDetails(array[1].ToString().Trim(), array[3].ToString().Trim(), array[5].ToString().Trim(), Gender, array[9].ToString().Trim());
+                return "Pass";
             }
             catch (Exception ex)
             {
-
+                return "fail";
             }
 
 
