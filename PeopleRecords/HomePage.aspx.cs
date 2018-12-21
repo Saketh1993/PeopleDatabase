@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
@@ -15,15 +16,38 @@ namespace PeopleRecords
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            
         }
+
+
 
         [System.Web.Services.WebMethod]
-        public static string GetPersonDetails()
+        public static string GetPersonDetails(string Name)
         {
-            //var stringArr = dataTable.Rows[0].ItemArray.Select(x => x.ToString()).ToArray();
-            return "";
+            DataTable dtbl;
+            DB db = new DB();
+            db.GetPeopleData(out dtbl);
+            dtbl.Columns.Add("Name");
+            StringBuilder sb = new StringBuilder();
+            // sb.Append('[');
+            DataRow dr;
+            foreach (DataRow dr1 in dtbl.Rows)
+            {
+                dr1["Name"] = dr1["First_Name"].ToString() + " " + dr1["Last_Name"].ToString();
+                sb.Append(string.Format("{0},", dr1["Name"].ToString()));
+            }
+            if(dtbl.Select("Name='"+Name.Trim()).Length>0)
+            {
+                 dr = dtbl.Select("Name='" + Name.Trim())[0];
+               
+            }
+            return JsonConvert.SerializeObject(dtbl);
+            //sb.Remove(sb.Length - 1, 1);
+            // sb.Append(']');
+            // return sb.ToString();
         }
+
+
 
         #region WebMethods
         /// <summary>
@@ -46,7 +70,7 @@ namespace PeopleRecords
             try
             {
                 char Gender = array[7].ToString().Contains("Male") ? 'M' : 'F';
-                db.SavePersonDetails(array[1].ToString().Trim(), array[3].ToString().Trim(), array[5].ToString().Trim(), Gender, array[9].ToString().Trim());
+                db.SavePersonDetails(array[1].ToString().Trim(), array[3].ToString().Trim(), array[5].ToString().Trim(), Gender, array[9].ToString().Trim(),0);
                 return "Pass";
             }
             catch (Exception ex)
@@ -71,10 +95,10 @@ namespace PeopleRecords
             {
                 DataTable dtbl;
                 //gets the table containing the states and state codes
-                // db.GetStates(out dtbl);
-                //string StatesJson = JsonConvert.SerializeObject(dtbl);
-                //  return JsonConvert.SerializeObject(dtbl);
-                return "Json String comes here";
+                db.GetStates(out dtbl);
+                string StatesJson = JsonConvert.SerializeObject(dtbl);
+                return JsonConvert.SerializeObject(dtbl);
+                //return "Json String comes here";
             }
             catch (Exception ex)
             {

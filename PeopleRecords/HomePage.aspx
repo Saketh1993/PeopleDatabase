@@ -42,38 +42,19 @@
             $(document).ready(function () {
                 //https://www.aspsnippets.com/Articles/Call-Server-Side-function-from-JavaScript-without-PostBack-in-ASPNet.aspx
                 //var change = function (txt) {
-                //PageMethods.GetStates(onsucces, onfailure);
+                PageMethods.GetStates(onsucces, onfailure);
+                // PageMethods.GetPersonDetails(PersonDetails, PersonDetailsFail); //gets peeople names for textbox auto complete
+                //var availableTags = [
+                //    "ActionScript",
+                //    "Scala",
+                //    "Scheme"
+                //];
+                //$("#txtPersonSearch").autocomplete({
+                //    source: availableTags
+                //});
 
-                var availableTags = [
-                    "ActionScript",
-                    "AppleScript",
-                    "Asp",
-                    "BASIC",
-                    "C",
-                    "C++",
-                    "Clojure",
-                    "COBOL",
-                    "ColdFusion",
-                    "Erlang",
-                    "Fortran",
-                    "Groovy",
-                    "Haskell",
-                    "Java",
-                    "JavaScript",
-                    "Lisp",
-                    "Perl",
-                    "PHP",
-                    "Python",
-                    "Ruby",
-                    "Scala",
-                    "Scheme"
-                ];
-                $("#txtPersonSearch").autocomplete({
-                    source: availableTags
-                });
-
-                var txt = '5';
-                $("#cmState").append('<option>' + txt + '</option>');
+                //var txt = '5';
+                //$("#cmState").append('<option>' + txt + '</option>');
                 //};
                 //$('.datepicker').datepicker({
                 //    format: 'mm/dd/yyyy',
@@ -92,14 +73,15 @@
                         //fv.revalidateField('date');
                     });
 
-                //$('#btnSubmit').click(function () {
 
-                //});
                 $('#btnAddPerson').click(function () {
 
                     $('#txtFirstName').val('');
                     $('#txtLastName').val('');
                     $('#dpDOB').val('');
+                    var person = $('#txtPersonSearch').val('');
+                    if (person != '') { PageMethods.GetPersonDetails(txtPersonSearch, PersonDetails, PersonDetailsFail); }
+
                 });
 
 
@@ -135,19 +117,19 @@
                                 message: 'Name can only consist of alphabetical'
                             },
                         },
-                        dpDOB: {
-                            validators: {
-                                //notEmpty: {
-                                //    message: 'The date is required'
-                                //},
-                                date: {
-                                    format: 'MM/DD/YYYY',
-                                    min: '01/01/2010',
-                                    max: '12/30/2020',
-                                    message: 'The date is not valid'
-                                },
-                            },
-                        },
+                        //dpDOB: {
+                        //    validators: {
+                        //        //notEmpty: {
+                        //        //    message: 'The date is required'
+                        //        //},
+                        //        date: {
+                        //            format: 'MM/DD/YYYY',
+                        //            min: '01/01/2010',
+                        //            max: '12/30/2020',
+                        //            message: 'The date is not valid'
+                        //        },
+                        //    },
+                        //},
                         cmState: {
                             validators: {
                                 notEmpty: {
@@ -165,6 +147,27 @@
             function onFormError(e) {
                 // Do something ...
                 //alert();
+            }
+
+            function PersonDetailsFail(r) {
+
+            }
+            function PersonDetails(r) {
+
+                //text box auto complete with exisitng people names from the DB
+                //var availableTags = r
+                //alert(r);
+                //$("#txtPersonSearch").autocomplete({
+                //    source: availableTags
+                //});
+
+                var v = JSON.parse(r);
+                $('#txtFirstName').val(v[0]['First_Name']);
+                $('#txtLastName').val(v[0]['Last_Name']);
+                $('#dpDOB').val(v[0]['DOB']);
+                 $('#cmGender').val(v[0]['Gender']);
+                $('#cmState').val(v[0]['State_Code']);
+
             }
 
             //on validation of form success this function  is triggered 
@@ -200,6 +203,7 @@
                 //    }
                 //});
                 PageMethods.SavePerson(JSON.stringify(data).replace(/[\[\]]+/g, ''), onsucces1, onfailure1);
+                alert("Saved Details");
 
             }
             function onsucces1(r) {
